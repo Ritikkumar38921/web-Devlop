@@ -1,0 +1,38 @@
+/* body{
+    background-color: red;
+} */
+
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: green;
+    height: 500px;
+    align-items: center;
+    /* flex-wrap:wrap-reverse; */
+}
+.flex-item{
+    width:70px;
+    height: 40px;
+    /* background-color: seashell; */
+    color: red;
+    border: 5px solid black;
+    /* border-radius: 25px; */
+    text-align: center;
+    padding-top: 26px;
+    background-color: aqua;
+    
+}
+
+#box1{
+    order: 5;
+     width: 40px;
+     flex-shrink: 5;
+}
+#box3{
+    order:14;
+    /* flex-grow: 3; */
+}
+#box5{
+    order:3px;
+}
