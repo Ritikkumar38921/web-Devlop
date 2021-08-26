@@ -6,42 +6,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        *{
+            box-sizing: content-box;
+        }
         body{
-            background-color: green;
-        }
-        .nav{
-            display: inline;
-            background-color:black;
-            border: 2px solid white;
-            height: 40px;
-            color:white;
-            font-size: 30px;
-            text-decoration: none;
-            padding: 20px;
-          
-        }
-
+            background-color: black;
+            border:3px solid red;
+            outline-width: 6px;
+            outline-style: solid;
+            outline-color: green;
+            outline-offset: 40px;
+            /* background-color: rgb(135, 141, 141);
+        } */
+    }
         .container{
-            display: flex;
-            height: 500px;
-            width:500px;
+            display: grid;
+            width: 330px;
+            margin-left: 40vw;
+            grid-template-columns:repeat(4,1fr);
+            grid-template-rows: repeat(3,1fr);
+            border:3px solid red;
+           
+           gap: 5px 5px;
            
         }
-
-
+        h1{
+            background-color: green;
+            color:white;
+            text-transform: capitalize;
+            text-align: center;
+            font-size: 50px;
+        }
+        .item{
+            background-color: rgb(48, 221, 221);
+            /* width: 70px; */
+            height: 60px;
+            text-align: center;
+            font-size: 35px;
+            border:2px solid white;
+            padding-top: 30px;
+        }
+        #item-unique{
+            grid-column-start: 1;
+            grid-column-end: 5;
+        }
+        #item0{
+            grid-column-start:1;
+            grid-column-end: 3;
+        }
     </style>
 </head>
 <body>
-    <h1> click here to see my details</h1>
-    <div>  
-        <div class="container">
-           
-                <div><a class="nav" href="about.html">About</a></div>
-                <div><a class="nav" href="skills.html">Skills</a></div>
-                
+    <h1>calculator</h1>
+    <div class="container">
+        <div class="item" id="item-unique"></div>
 
-        </div>
+        <div class="item" id="itemac">AC</div>
+        <div class="item" id="itemdel">DEL</div>
+        <div class="item" id="item%">%</div>
+        <div class="item" id="item/">/</div>
+        <div class="item" id="item7">7</div>
+        <div class="item" id="item8">8</div>
+        <div class="item" id="item9">9</div>
+        <div class="item" id="itemMUL">*</div>
+        <div class="item" id="item4">4</div>
+        <div class="item" id="item5">5</div>
+        <div class="item" id="item6">6</div>
+        <div class="item" id="item-">-</div>
+        <div class="item" id="item1">1</div>
+        <div class="item" id="item2">2</div>
+        <div class="item" id="item3">3</div>
+        <div class="item" id="item+">+</div>
+        <div class="item" id="item0">0</div>
+        <div class="item" id="item.">.</div>
+        <div class="item" id="item=">=</div>
         
     </div>
+
 </body>
 </html>
