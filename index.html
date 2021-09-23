@@ -1,49 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
-    <style>
-        h1{
-            text-transform: capitalize;
-            text-align: center;
-            font-size: 50px;
-            color:black;
-        }
-        .value{
-            text-align: center;
-            font-size: 65px;
-        }
-        .btn{
-            padding: 10px 45px;
-            text-align: center;
-            
-        }
-        .container{
-            padding-top: 30vh;
-
-        }
-        #decrease,#reset,#increase{
-            padding: 20px;
-            background-color: green;
-            color:white;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    div{
+      display: inline-block;
+    }
+    
+    .key{
+      width: 100px;
+      height:100px;
+      background: orange;
+      color: white;
+      font-size: 24px;border: 2px solid red;
+      border: 2px solid black;
+      transition: all 1s;
+    }
+    .playing{
+      transform:scale(1.06);
+      border:2px solid yellow;
+      background-color: blueviolet;
+    }
+    kbd{
+      font-weight: bold;
+    }
+    .display{
+      background-color: blueviolet;
+      color: white;
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class='container'>
-    <h1>counter</h1>
-    <div class="parent">
-    <div class="value">0</div>
-    </div>
-    <div class="btn">
-        <button id="decrease">Decrease</button>
-        <button id="reset">Reset</button>
-        <button id="increase">Increase</button>
-    </div>
-</div>
-<script src="ritik.js"></script>
+  <div>
+    <div class="key" id="65"><kbd>A</kbd></div>
+    <div class="key" id="66"><kbd>B</kbd></div>
+    <div class="key" id="67"><kbd>C</kbd></div>
+    <div class="key" id="68"><kbd>D</kbd></div>
+    <div class="key" id="69"><kbd>E</kbd></div>
+    <div class="key" id="70"><kbd>F</kbd></div>
+  </div>
+  <audio id="65" src="./tink.wav"></audio>
+  <audio id="66" src="./tom.wav"></audio>
+  <audio id="67" src="./snare.wav"></audio>
+  <audio id="68" src="./ride.wav"></audio>
+  <audio id="69" src="./openhat.wav"></audio>
+  <audio id="70" src="./kick.wav"></audio>
+  <section class="display">Result</section>
+  <script>
+    const res = document.querySelector("section");
+    const divs = document.querySelectorAll(".key");
+    const audios = document.querySelectorAll("audio");
+    
+    window.addEventListener("keydown",function(e){
+       res.textContent = e.keyCode;
+         audios.forEach(function(arg){   
+        if(arg.id === e.keyCode.toString())    
+            arg.play();
+            arg.currentTime = 0;
+            
+            
+      });
+      function removeclass(e){
+        this.classList.remove("playing");
+      }
+      divs.forEach(div => {
+        if(div.id === e.keyCode.toString()){
+          div.classList.add("playing");
+          
+        
+          setTimeout(function(){
+            div.classList.remove("playing");
+          },1000)
+        }
+     });
+    });
+    
+
+  </script>
 </body>
 </html>
