@@ -6,107 +6,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    body{
-      background-color: blueviolet;
-    }
-    .clock-face{
-      width: 40vw;
-      height:40vw;
-      background-color: red;
-      border:6px solid white;
-      border-radius: 50%;
-      margin:auto;
-      /* transition: all 0.5 ease; */
-      position: relative;
-
-    }
-    .hand{
-     
-      background-color: black;
-      position: absolute;
-      left: 49%;
-      top: 9%;
-      transform: rotate(0deg);
-       transform-origin: bottom; /*transition: all 0.5 ease; */
-    }
-    .hour{
-        width:1.7%;
-        height: 33%;
-        top: 16%;
-        opacity: 0.6;
-    }
-    .minute{
-    width:1.3%;
-    height: 40%;opacity: 0.6;
     
-    }
-    .second{
-      width:1%;
-      height: 45%;
-      top:4%;
-      opacity: 0.7;
-      left:49.5%;
-     
-
-    }
-    span{
-      background-color: green;
-      color:white;
-      font-size: 4vw;
-      padding: 10px;
-      text-align:end;
-     
-      margin-left:90vw;
-      margin-top: 10vw;
-      padding: 20px;
-      border: 2px solid yellow;
-    }
-
-  </style>
+  :root{
+      --base:#fff;
+      --spacing:10px;
+      --blur:10px;
+  }
+  img{
+    padding: var(--spacing);
+    background-color: var(--base);
+    filter: brightness(200%);
+    width: 400px;
+    height: 400px;
+    /* margin: 0 auto; */
+    border-radius: 50%;
+    background-size: cover;
+    position: relative;
+    top:10vh;
+    left:30vw;
+    
+  }
+  body{
+    background-color: rgb(49, 44, 44);
+  }
+  h1{
+    text-transform: capitalize;
+    font-size: 60px;
+    color:white;
+    text-align: center;
+  }
+  .uppercase{
+    text-transform: uppercase;
+  }
+  
+  .Color{
+    color:yellow;
+  }
+  label{
+    text-transform: capitalize;
+    color:white;
+    font-size: 35px;
+  }
+</style>
 </head>
 <body>
-    <span>text</span>
-    <div class="clock-face">
-      <div class="hand hour" id="Hour"></div>
-      <div class="hand minute" id="Minute"></div>
-      <div class="hand second" id="Second"></div>
-    </div>
-    <script>
-      const hours = document.querySelector("#Hour");
-      const minute = document.querySelector("#Minute");
-      const second = document.querySelector("#Second");
-const AM_PM = document.querySelector("span");
-  setInterval(function(){
-    let date = new Date();
-      let h = date.getHours();
-      let min = date.getMinutes();
-      let sec = date.getSeconds();
-      // console.log(h);
-      // console.log(min);
-      // console.log(sec);
-      if(h > 12){
-          AM_PM.textContent = "P.M.";
-          h = h - 12;
-          console.log(h);
+<header>
+  <h1>update <span class="uppercase">css</span>variable with <span class="uppercase Color">js</span></h1>
+</header>
+<div class="controls">
+  <label for="space">spacing</label>
+  <input type="range" name="spacing" id="space" min="1" max="30" value="5" step="1" data-sizing="px">
+  <label for="blur">blur</label>
+  <input type="range" name="blur" id="blur" min="0" max="25" value="3" step="1" data-sizing="px">
+  <label for="colour">color</label>
+  <input type="color" name="base" id="colour" data-unit="none">
+</div>
+<div class="image">
+  <img src="./person3.jfif" alt="girl image">
+</div>
 
-      }else{
-        AM_PM.textContent = "A.M.";
-      }
-      let hourRotation = 30*h + min/2+ sec/120;
-      let minuteRotation = 6*min + sec/2;
-      let secondRotation = 6*sec;
-      
-      second.style.transform = `rotate(${secondRotation}deg)`;
-      minute.style.transform = `rotate(${minuteRotation}deg)`;
-      hours.style.transform = `rotate(${hourRotation}deg)`;
+<script>
+ let inputs = document.querySelectorAll("input");
+  function updateChange(){
+   let suffix = this.dataset.sizing||'';
+   const a = document.documentElement;
+   console.log(`--${this.name}`+ this.value+suffix);
+   a.style.setProperty(`--${this.name}`,this.value+suffix)
+  }
 
-  },1000);
-      
-      
-      
-
-
-    </script>
+ inputs.forEach(input => {
+   input.addEventListener("change",updateChange);
+   input.addEventListener("mousemove",updateChange);
+ });
+  
+</script> 
  
-</body>
-</html>
+ <body>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
