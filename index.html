@@ -6,89 +6,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    
-  :root{
-      --base:#fff;
-      --spacing:10px;
-      --blur:10px;
-  }
-  img{
-    padding: var(--spacing);
-    background-color: var(--base);
-    filter: brightness(200%);
-    width: 400px;
-    height: 400px;
-    /* margin: 0 auto; */
-    border-radius: 50%;
-    background-size: cover;
-    position: relative;
-    top:10vh;
-    left:30vw;
-    
-  }
-  body{
-    background-color: rgb(49, 44, 44);
-  }
-  h1{
-    text-transform: capitalize;
-    font-size: 60px;
-    color:white;
-    text-align: center;
-  }
-  .uppercase{
-    text-transform: uppercase;
-  }
-  
-  .Color{
-    color:yellow;
-  }
-  label{
-    text-transform: capitalize;
-    color:white;
-    font-size: 35px;
-  }
-</style>
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+      .wrapper{
+        display: flex;
+        /* flex-wrap:wrap; */
+        width:60vw;
+        min-height: 100vh;
+        flex-direction: row;
+        /* transition: 0.7s; */
+        
+      }
+      p{
+        font-size: 2.6vw;
+      }
+      .container{
+        flex:1;
+        font-size:25px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        border: 2px solid red;
+        
+      }
+      .box-1{
+        background-color: rgb(123, 100, 145);
+        color:white;
+        transition: transform 1s linear;
+      }
+      .box-2{
+        background-color: rgb(136, 17, 110);
+        transition: transform 1s linear;
+        color:white;
+      }
+      .box-3{
+        background-color: rgb(3, 109, 65);
+        color:white;
+        transition: transform 1s linear;
+
+      }
+      .box-4{
+        background-color: rgb(44, 23, 63);
+        color:white;
+        transition: transform 1s linear;
+
+      }
+      .box-5{
+        background-color: rgb(193, 8, 250);
+        color:white;
+        transition: transform 1s linear;
+
+      }
+      .container > *:nth-child(2){
+        font-size: 47px;
+        text-transform: capitalize;
+      }
+      .container > *:first-child{
+        transform: translateY(-100%);
+      }
+      .container.open-active > *:first-child{
+        transform: translateY(0);
+      }
+      .container.open-active{
+        flex: 10;
+      }
+      .container.open-active > *:last-child{
+        transform: translateY(0);
+        
+      }
+      .container > *:last-child{
+        transform: translateY(100%);
+      }
+      .container > *{
+        display: flex;
+        transition: transform 0.5s;
+        justify-content: center;
+        align-items: center;
+        flex:1 0 auto;
+      }
+      .open-active{
+        transform: translateY(0);
+        font-size: 20px;
+        border:4px solid rgb(192, 155, 175);
+      }
+  </style>
 </head>
 <body>
-<header>
-  <h1>update <span class="uppercase">css</span>variable with <span class="uppercase Color">js</span></h1>
-</header>
-<div class="controls">
-  <label for="space">spacing</label>
-  <input type="range" name="spacing" id="space" min="1" max="30" value="5" step="1" data-sizing="px">
-  <label for="blur">blur</label>
-  <input type="range" name="blur" id="blur" min="0" max="25" value="3" step="1" data-sizing="px">
-  <label for="colour">color</label>
-  <input type="color" name="base" id="colour" data-unit="none">
+  <div class="wrapper">
+  <div class="container box-1" id="a">
+       <p>Ritik</p>
+       <p>hi</p>
+       <p>Kumar</p>
+  </div>
+  <div class="container box-2" id="b">
+    <p>Let's</p>
+    <p>Understand</p>
+    <p>Programming</p>
 </div>
-<div class="image">
-  <img src="./person3.jfif" alt="girl image">
+<div class="container box-3" id="c">
+  <p>Let's</p>
+  <p>Understand</p>
+  <p>Web Development</p>
+</div>
+<div class="container box-4" id="d">
+  <p>Let's</p>
+  <p>Understand</p>
+  <p>Andriod Development</p>
+</div>
 </div>
 
 <script>
- let inputs = document.querySelectorAll("input");
-  function updateChange(){
-   let suffix = this.dataset.sizing||'';
-   const a = document.documentElement;
-   console.log(`--${this.name}`+ this.value+suffix);
-   a.style.setProperty(`--${this.name}`,this.value+suffix)
+  function func(){
+    this.classList.toggle("open-active");
   }
+    const A = document.querySelector("#a");
+    const B = document.querySelector("#b");
+    const C = document.querySelector("#c");
+    const D = document.querySelector("#d");
 
- inputs.forEach(input => {
-   input.addEventListener("change",updateChange);
-   input.addEventListener("mousemove",updateChange);
- });
-  
-</script> 
- 
- <body>
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
+    A.addEventListener("click",func);
+    B.addEventListener("click",func);
+    C.addEventListener("click",func);
+    D.addEventListener("click",func);
+
+
+
+</script>
+</body>
+</html>
