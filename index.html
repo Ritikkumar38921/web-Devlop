@@ -6,135 +6,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    *{
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    h1{
+      text-align: center;
+      font-size: 30px;
+      text-transform:capitalize;
+      padding:10px;
+      border:2px solid red;
+      background-color: blueviolet;
+      color:white;
     }
-      .wrapper{
-        display: flex;
-        /* flex-wrap:wrap; */
-        width:60vw;
-        min-height: 100vh;
-        flex-direction: row;
-        /* transition: 0.7s; */
-        
-      }
-      p{
-        font-size: 2.6vw;
-      }
-      .container{
-        flex:1;
-        font-size:25px;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        border: 2px solid red;
-        
-      }
-      .box-1{
-        background-color: rgb(123, 100, 145);
-        color:white;
-        transition: transform 1s linear;
-      }
-      .box-2{
-        background-color: rgb(136, 17, 110);
-        transition: transform 1s linear;
-        color:white;
-      }
-      .box-3{
-        background-color: rgb(3, 109, 65);
-        color:white;
-        transition: transform 1s linear;
-
-      }
-      .box-4{
-        background-color: rgb(44, 23, 63);
-        color:white;
-        transition: transform 1s linear;
-
-      }
-      .box-5{
-        background-color: rgb(193, 8, 250);
-        color:white;
-        transition: transform 1s linear;
-
-      }
-      .container > *:nth-child(2){
-        font-size: 47px;
-        text-transform: capitalize;
-      }
-      .container > *:first-child{
-        transform: translateY(-100%);
-      }
-      .container.open-active > *:first-child{
-        transform: translateY(0);
-      }
-      .container.open-active{
-        flex: 10;
-      }
-      .container.open-active > *:last-child{
-        transform: translateY(0);
-        
-      }
-      .container > *:last-child{
-        transform: translateY(100%);
-      }
-      .container > *{
-        display: flex;
-        transition: transform 0.5s;
-        justify-content: center;
-        align-items: center;
-        flex:1 0 auto;
-      }
-      .open-active{
-        transform: translateY(0);
-        font-size: 20px;
-        border:4px solid rgb(192, 155, 175);
-      }
+    input[type="text"]{
+      position: relative;
+      left:40vw;
+      font-size: 40px;
+      border:10px solid red;
+    }
+    ul li{
+      font-size: 20px;
+      font-family:Verdana, Geneva, Tahoma, sans-serif;
+      position: relative;
+      left:35vw;
+      background-color: rgb(31, 31, 14);
+      color: white;
+    }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-  <div class="container box-1" id="a">
-       <p>Ritik</p>
-       <p>hi</p>
-       <p>Kumar</p>
-  </div>
-  <div class="container box-2" id="b">
-    <p>Let's</p>
-    <p>Understand</p>
-    <p>Programming</p>
-</div>
-<div class="container box-3" id="c">
-  <p>Let's</p>
-  <p>Understand</p>
-  <p>Web Development</p>
-</div>
-<div class="container box-4" id="d">
-  <p>Let's</p>
-  <p>Understand</p>
-  <p>Andriod Development</p>
-</div>
-</div>
+    <h1 style="font-size: 30px;">About Regular Expression</h1>
+    <form id="form1">
+        <input type="text" placeholder="Write Here" class="textarea">
+        <!-- <input type="submit" value="Search" id="go"> -->
+        <ul class="suggestion">
+          <li>hello ritik</li>
+          <!-- <li></li> -->
+        </ul>
+        
+   
+      </form>
+      
+    <script>
+     const text = document.querySelector(".textarea");
+     const suggestion = document.querySelector(".suggestion");
+     const source = "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+     let arr = [];
+     fetch(source)
+     .then(response => response.json())
+     .then(data => arr.push(...data));
+    console.log(arr);
+     function findMatches(string,arr){
+       const reg = new RegExp(string,"gi");     
+       let k =  arr.filter(obj => {
+        return obj.city.match(reg)||obj.state.match(reg);
+       });
+       return k;   
+      //  console.log(k);
+     }
+      function displaymethod(){
+        const temp = findMatches(this.value,arr);
+        // console.log(temp[0].city);
+        // console.log(temp[0].state);
+        // console.log(temp[0].population);
+        let list = temp.map(item => {
+           return `<li>
+            <span>${item.city},</span>
+            <span>${item.state} </span>&nbsp;&nbsp;
+            <span>${item.population}</span>
+            </li>
+            `;
+        }).join("");
+        
 
-<script>
-  function func(){
-    this.classList.toggle("open-active");
-  }
-    const A = document.querySelector("#a");
-    const B = document.querySelector("#b");
-    const C = document.querySelector("#c");
-    const D = document.querySelector("#d");
+        suggestion.innerHTML = list;
 
-    A.addEventListener("click",func);
-    B.addEventListener("click",func);
-    C.addEventListener("click",func);
-    D.addEventListener("click",func);
+        // let ref = document.querySelector(".suggestion li");
+        // console.log(ref.value);
 
-
-
-</script>
+      }
+    
+     text.addEventListener("keyup",displaymethod);
+    text.addEventListener("keyup",colorSelected);
+    //  findMatches("New York",arr);
+    </script>
 </body>
 </html>
