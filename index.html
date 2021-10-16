@@ -5,87 +5,155 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-    h1{
-      text-align: center;
-      font-size: 30px;
-      text-transform:capitalize;
-      padding:10px;
-      border:2px solid red;
-      background-color: blueviolet;
-      color:white;
-    }
-    input[type="text"]{
-      position: relative;
-      left:40vw;
-      font-size: 40px;
-      border:10px solid red;
-    }
-    ul li{
-      font-size: 20px;
-      font-family:Verdana, Geneva, Tahoma, sans-serif;
-      position: relative;
-      left:35vw;
-      background-color: rgb(31, 31, 14);
-      color: white;
-    }
-  </style>
 </head>
 <body>
-    <h1 style="font-size: 30px;">About Regular Expression</h1>
-    <form id="form1">
-        <input type="text" placeholder="Write Here" class="textarea">
-        <!-- <input type="submit" value="Search" id="go"> -->
-        <ul class="suggestion">
-          <li>hello ritik</li>
-          <!-- <li></li> -->
-        </ul>
-        
-   
-      </form>
-      
-    <script>
-     const text = document.querySelector(".textarea");
-     const suggestion = document.querySelector(".suggestion");
-     const source = "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
-     let arr = [];
-     fetch(source)
-     .then(response => response.json())
-     .then(data => arr.push(...data));
-    console.log(arr);
-     function findMatches(string,arr){
-       const reg = new RegExp(string,"gi");     
-       let k =  arr.filter(obj => {
-        return obj.city.match(reg)||obj.state.match(reg);
-       });
-       return k;   
-      //  console.log(k);
-     }
-      function displaymethod(){
-        const temp = findMatches(this.value,arr);
-        // console.log(temp[0].city);
-        // console.log(temp[0].state);
-        // console.log(temp[0].population);
-        let list = temp.map(item => {
-           return `<li>
-            <span>${item.city},</span>
-            <span>${item.state} </span>&nbsp;&nbsp;
-            <span>${item.population}</span>
-            </li>
-            `;
-        }).join("");
-        
+  <canvas id="canvas" width="600" height="600"></canvas>
+  <div>
+    <h1 id="real-time"></h1>
+    <h3 id="timing"></h3>
+  </div>
+  <script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var radius;
+    canvas.style.background = "yellow";
+    ctx.translate(canvas.width/2,canvas.height/2);
+   setInterval(mainfunc,1000);
+    function mainfunc(){
+    ctx.beginPath();
+    ctx.fillStyle = "white";
+    ctx.arc(0,0,(canvas.width/2)*0.85,0,2*Math.PI);
+    ctx.fill();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.fillStyle = "black";
+    ctx.arc(0,0,(canvas.width/2)*0.05,0,2*Math.PI);
+    ctx.fill();
+    ctx.closePath();
+    let num = 1;
+    ctx.font = "30px arial";
+    ctx.textAlign = "center";
+    var ang;
+    radius = (canvas.width/2)*0.85;
+ for(num = 1;num <= 12;num++){
+  ang = num * Math.PI/6;
+  ctx.rotate(ang);
+  ctx.translate(0,-radius*0.85);
+  ctx.rotate(-ang);
+  ctx.fillText(num.toString(),0,0);
+  ctx.rotate(ang);  
+  ctx.translate(0,radius*0.85);
+  ctx.rotate(-ang);
+ }
+   workingFunc(ctx,radius);
+   function workingFunc(ctx,radius){
+     var date = new Date();
+     let hours = date.getHours();
+     let minute = date.getMinutes();
+     let sec = date.getSeconds();
+     let time;
+    hours = hours % 12;
 
-        suggestion.innerHTML = list;
+     //  console.log(`${hours} : ${minute} : ${sec}`);
+    let h = (Math.PI*hours) + ((Math.PI/(6*60))*minute) + ((Math.PI/(360*60))*sec);
+   let  m = ((Math.PI/30*60)*minute) ;
+    let s = ((Math.PI/(30))*sec);
+   let min_width = -radius*0.70;
+   let sec_width = -radius * 0.80;
+   let hour_width = -radius * 0.50;
 
-        // let ref = document.querySelector(".suggestion li");
-        // console.log(ref.value);
+     niddles(ctx,radius,h,hour_width,10);
+     niddles(ctx,radius,m,min_width,7);
+     niddles(ctx,radius,s,sec_width,4);
 
-      }
     
-     text.addEventListener("keyup",displaymethod);
-    text.addEventListener("keyup",colorSelected);
-    //  findMatches("New York",arr);
-    </script>
+  }
+}
+   function niddles(ctx,radius,angle,width,l_width){
+   
+     // hours hand
+     ctx.beginPath();
+     ctx.moveTo(0,0);
+     ctx.rotate(angle);
+     ctx.lineCap = "round";
+     ctx.lineTo(0,width);
+     ctx.rotate(-angle);
+     ctx.lineWidth = l_width;
+     ctx.stroke();
+     ctx.closePath();
+     // minute hand
+    //  ctx.beginPath();
+    //  ctx.moveTo(0,0);
+    //  ctx.rotate(min);
+    //  ctx.lineTo(0,-radius*0.70);
+    //  ctx.rotate(-min);
+    //  ctx.lineWidth = 8;
+    //  ctx.stroke();
+    //  ctx.closePath();
+    //   // second hand
+    //  ctx.beginPath();
+    //  ctx.moveTo(0,0);
+    //  ctx.rotate(sec);
+    //  ctx.lineTo(0,-radius*0.80);
+    //  ctx.rotate(-sec);
+    //  ctx.lineWidth = 4;
+    //  ctx.stroke();
+    //  ctx.closePath();
+   }
+
+  // ctx.rotate(-90*Math.PI/180);
+
+
+
+    // ctx.rotate(45*Math.PI/180);
+    // ctx.translate(radius,radius);
+    // radius = radius*0.90;
+    // drawckock();
+
+    // function drawckock(){
+    //   drawFace(ctx,radius);
+    //   console.log("ritik");
+    //   drawNo(ctx,radius);
+    // }
+    // function drawNo(ctx,radius){
+    //   var ang;
+    //   var num;
+    //   ctx.font = radius*0.15 + "px arial";
+    //   ctx.textBaseline = "middle";
+    //   ctx.textAlign = "center";
+    //   ctx.strokeStyle = "green";
+    //   console.log(ctx.translate);
+    //   for(num = 1;num <= 12;num++){
+    //     ang = num * (Math.PI/6);
+    //    ctx.rotate(ang);
+       
+    //     ctx.translate(0,-radius*0.85);
+    //     ctx.rotate(-ang);
+    //     ctx.fillText(num.toString(),0,0);
+    //     ctx.rotate(ang);
+    //     ctx.translate(0,radius*0.85);
+    //     ctx.rotate(-ang);
+       
+    //   }
+    // }
+    // function drawFace(ctx,radius){
+    //   var grad;
+    //   ctx.beginPath();
+    //   ctx.arc(0,0,radius,0,2*Math.PI);
+    //   ctx.fillStyle = "white";
+    //   ctx.fill();
+    //   grad = ctx.createRadialGradient(0,0,radius*0.95,0,0,radius*1.05);
+    //   grad.addColorStop(0,"#333");
+    //   grad.addColorStop(0.5,"white");
+    //   grad.addColorStop(1,"#333");
+    //   ctx.strokeStyle = grad;
+    //   ctx.linewidth = radius*0.1;
+    //   ctx.stroke();
+    //   ctx.beginPath();
+    //   ctx.arc(0,0,radius*0.1,0,2*Math.PI);
+    //   ctx.fillStyle = "red";
+    //   ctx.fill();
+    //     }
+  </script>
 </body>
 </html>
