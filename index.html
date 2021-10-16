@@ -7,153 +7,74 @@
   <title>Document</title>
 </head>
 <body>
-  <canvas id="canvas" width="600" height="600"></canvas>
-  <div>
-    <h1 id="real-time"></h1>
-    <h3 id="timing"></h3>
-  </div>
-  <script>
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    var radius;
-    canvas.style.background = "yellow";
-    ctx.translate(canvas.width/2,canvas.height/2);
-   setInterval(mainfunc,1000);
-    function mainfunc(){
-    ctx.beginPath();
-    ctx.fillStyle = "white";
-    ctx.arc(0,0,(canvas.width/2)*0.85,0,2*Math.PI);
-    ctx.fill();
-    ctx.closePath();
-    ctx.beginPath();
-    ctx.fillStyle = "black";
-    ctx.arc(0,0,(canvas.width/2)*0.05,0,2*Math.PI);
-    ctx.fill();
-    ctx.closePath();
-    let num = 1;
-    ctx.font = "30px arial";
-    ctx.textAlign = "center";
-    var ang;
-    radius = (canvas.width/2)*0.85;
- for(num = 1;num <= 12;num++){
-  ang = num * Math.PI/6;
-  ctx.rotate(ang);
-  ctx.translate(0,-radius*0.85);
-  ctx.rotate(-ang);
-  ctx.fillText(num.toString(),0,0);
-  ctx.rotate(ang);  
-  ctx.translate(0,radius*0.85);
-  ctx.rotate(-ang);
- }
-   workingFunc(ctx,radius);
-   function workingFunc(ctx,radius){
-     var date = new Date();
-     let hours = date.getHours();
-     let minute = date.getMinutes();
-     let sec = date.getSeconds();
-     let time;
-    hours = hours % 12;
 
-     //  console.log(`${hours} : ${minute} : ${sec}`);
-    let h = (Math.PI*hours) + ((Math.PI/(6*60))*minute) + ((Math.PI/(360*60))*sec);
-   let  m = ((Math.PI/30*60)*minute) ;
-    let s = ((Math.PI/(30))*sec);
-   let min_width = -radius*0.70;
-   let sec_width = -radius * 0.80;
-   let hour_width = -radius * 0.50;
-
-     niddles(ctx,radius,h,hour_width,10);
-     niddles(ctx,radius,m,min_width,7);
-     niddles(ctx,radius,s,sec_width,4);
-
+   <canvas id="canvas" width=500 height=500 style="border: 8px solid red;">your browser doesnot support the canvas</canvas>
+   <script>
+     let arr = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F","a","b","c","d","e","f"];
     
-  }
-}
-   function niddles(ctx,radius,angle,width,l_width){
-   
-     // hours hand
-     ctx.beginPath();
-     ctx.moveTo(0,0);
-     ctx.rotate(angle);
-     ctx.lineCap = "round";
-     ctx.lineTo(0,width);
-     ctx.rotate(-angle);
-     ctx.lineWidth = l_width;
-     ctx.stroke();
-     ctx.closePath();
-     // minute hand
-    //  ctx.beginPath();
-    //  ctx.moveTo(0,0);
-    //  ctx.rotate(min);
-    //  ctx.lineTo(0,-radius*0.70);
-    //  ctx.rotate(-min);
-    //  ctx.lineWidth = 8;
-    //  ctx.stroke();
-    //  ctx.closePath();
-    //   // second hand
-    //  ctx.beginPath();
-    //  ctx.moveTo(0,0);
-    //  ctx.rotate(sec);
-    //  ctx.lineTo(0,-radius*0.80);
-    //  ctx.rotate(-sec);
-    //  ctx.lineWidth = 4;
-    //  ctx.stroke();
-    //  ctx.closePath();
-   }
+     function generateHexColor(){
+       let res = "#";
+       let s = arr.length;
+       for(let i=0;i<=5;i++){
+         res += arr[Math.floor(s*Math.random())];
+       }
+       return res;
+     }
+    let ref = document.getElementById("canvas");
+    let ctx = ref.getContext("2d");
+    let lastX = 0;
+    let lastY = 0;
+    let Lwidth = 2;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    let isDraw = false;
+    let count = 10;
+    function draw(e){
+        if(isDraw === false)
+        return;
+        let result;
+        if(count === 0){
+         result = generateHexColor();
+          count = 10;
+        }
+        count--;
+        ctx.strokeStyle = `${result}`;
+        
+        ctx.lineWidth = Lwidth;
+        
+        ctx.beginPath();
+        ctx.moveTo(lastX,lastY);
+        ctx.lineTo(e.offsetX,e.offsetY);
+        ctx.stroke();
+        lastX = e.offsetX;
+        lastY =  e.offsetY;
+        
+        ctx.closePath();
+        Lwidth += 1;
+        if(Lwidth > 170){
+          Lwidth = 2;
+        }
 
-  // ctx.rotate(-90*Math.PI/180);
+        
 
-
-
-    // ctx.rotate(45*Math.PI/180);
-    // ctx.translate(radius,radius);
-    // radius = radius*0.90;
-    // drawckock();
-
-    // function drawckock(){
-    //   drawFace(ctx,radius);
-    //   console.log("ritik");
-    //   drawNo(ctx,radius);
-    // }
-    // function drawNo(ctx,radius){
-    //   var ang;
-    //   var num;
-    //   ctx.font = radius*0.15 + "px arial";
-    //   ctx.textBaseline = "middle";
-    //   ctx.textAlign = "center";
-    //   ctx.strokeStyle = "green";
-    //   console.log(ctx.translate);
-    //   for(num = 1;num <= 12;num++){
-    //     ang = num * (Math.PI/6);
-    //    ctx.rotate(ang);
-       
-    //     ctx.translate(0,-radius*0.85);
-    //     ctx.rotate(-ang);
-    //     ctx.fillText(num.toString(),0,0);
-    //     ctx.rotate(ang);
-    //     ctx.translate(0,radius*0.85);
-    //     ctx.rotate(-ang);
-       
-    //   }
-    // }
-    // function drawFace(ctx,radius){
-    //   var grad;
-    //   ctx.beginPath();
-    //   ctx.arc(0,0,radius,0,2*Math.PI);
-    //   ctx.fillStyle = "white";
-    //   ctx.fill();
-    //   grad = ctx.createRadialGradient(0,0,radius*0.95,0,0,radius*1.05);
-    //   grad.addColorStop(0,"#333");
-    //   grad.addColorStop(0.5,"white");
-    //   grad.addColorStop(1,"#333");
-    //   ctx.strokeStyle = grad;
-    //   ctx.linewidth = radius*0.1;
-    //   ctx.stroke();
-    //   ctx.beginPath();
-    //   ctx.arc(0,0,radius*0.1,0,2*Math.PI);
-    //   ctx.fillStyle = "red";
-    //   ctx.fill();
-    //     }
-  </script>
+    }
+    
+    ref.addEventListener("mousemove",draw);
+    ref.addEventListener("mousedown",() => {
+      isDraw = true;
+      draw();
+    });
+    ref.addEventListener("mouseup",() => {
+      isDraw = false;
+      lastX = 0;
+      lastY = 0;
+      Lwidth = 2;
+      draw();
+    });
+    ref.addEventListener("mouseout",() => {
+      isDraw = false;
+      draw();
+    });
+   </script>
 </body>
 </html>
