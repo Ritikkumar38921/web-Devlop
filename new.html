@@ -5,25 +5,91 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        ul{
+            background-color: green;
+            color:#fff;
+            width:40vw;
+            margin:0 auto;
+        }
+        li{
+            font-size: 25px;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
-    <h1>konami keyboard</h1>
-    <button id="result">click here</button>
+    
     <script>
-        let arr = [];
-        const st = "here";
-        const res = document.querySelector("#result");
-        window.addEventListener("keyup",function(e){
-            arr.push(e.key);
-            arr.splice(0,arr.length-st.length);
-           let bool =  arr.join("").toLowerCase().includes(st);
-           if(bool){
-               console.log(`yes arr contain the string ${st}`);
+        
+        const bands = ['The Plot in You','The Devil Wears','Pierce the Veil','Norma Jean','The Bled','Say Anything','The Midway State','We came as Romans','Counterparts','Oh Sleeper','A Skylit Drive','Anywhere But Here','An Old Dog'];
+
+        function compareFunc(a,b){
+            let str1 = a;
+            let str2 = b;
+            let i = 0, j = 0;
+           while(str1 === ''){
+               i++;
            }
-           console.log(arr);
-        });
+           while(str2 === ''){
+               j++;
+           }
+                if(str1[i] === 'A'){
+                    if(str1[i+1] === 'n' && str1[i+2] === ''){
+                        str1 = str1.slice(i+3);
+                    }else if(str1[i+1] === 'n'){
+                   str1 = str1;
+                    }
+                    else{
+                        str1 = str1.slice(i+2);
+                    }
+                }else {
+                    if(str1[i+1] === 'h' && str1[i+2] === 'e'){
+                        str1 = str1.slice(i+4);
+                    }
+                }
+                
+                if(str2[j] === 'A'){
+                    console.log('hey');
+                    console.log(str2[j+2])
+                    if(str2[j+1] === 'n' && str1[j+2] === ''){
+                        str2 = str2.slice(j+3);
+                    }else if(str2[j+1] === 'n'){
+                        str2 = str2;
+                    }
+                    else{    
+                        str2 = str2.slice(j+2);
+                    }
+                }else {
+                    if(str2[j+1] === 'h' && str2[j+2] === 'e'){
+                        str2 = str2.slice(j+4);
+                    }
+                }
+                
+                
+                
+                if(str1 > str2){
+                    console.log('1');
+                    return 1;
+                }else{
+                    console.log('-1');
+                    return -1;
+                }
+                
+            }    
         
+        bands.sort(compareFunc);
+ 
+        const ele = document.createElement('ul');
+        let t = '';
+        for(let i=0;i<bands.length;i++){
+            t  += `<li>${bands[i]}</li>`;
+        }
+        console.log(t);
+        ele.innerHTML = t;
+
         
+        document.body.appendChild(ele);
     </script>
 </body>
 </html>
