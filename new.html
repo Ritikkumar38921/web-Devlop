@@ -7,89 +7,95 @@
     <title>Document</title>
     <style>
         ul{
-            background-color: green;
-            color:#fff;
-            width:40vw;
-            margin:0 auto;
+            width:50vw;
+            list-style: none;
         }
-        li{
+        li{  
             font-size: 25px;
+            color:blueviolet;
             font-weight: 700;
+         
+        }
+        p{  
+            right: 40vw;
+            display: inline;
+            position: fixed;
+        }
+        img{
+            width:150px;
+            border:2px solid red;
         }
     </style>
 </head>
 <body>
-    
+    <ul>
+        <li data-time='3.29'>
+            <img src="./person0.jpeg" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+        <li data-time='23.59'>
+            <img src="./udacity.jpg" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+        <li data-time='83.49'>
+            <img src="./person0.jpeg" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+        <li data-time='33.29'>
+            <img src="./person1.jfif" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+        <li data-time='30.46'>
+            <img src="./person0.jpeg" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+        <li data-time='20.29'>
+            <img src="./pauseButton.png" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+        <li data-time='35.26'>
+            <img src="./person2.jfif" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+        <li data-time='32.41'>
+            <img src="" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+        <li data-time='49.19'>
+            <img src="./person2.jfif" alt="ss">
+            <span class="Time"></span>
+            <hr/>
+        </li>
+    </ul>
     <script>
-        
-        const bands = ['The Plot in You','The Devil Wears','Pierce the Veil','Norma Jean','The Bled','Say Anything','The Midway State','We came as Romans','Counterparts','Oh Sleeper','A Skylit Drive','Anywhere But Here','An Old Dog'];
-
-        function compareFunc(a,b){
-            let str1 = a;
-            let str2 = b;
-            let i = 0, j = 0;
-           while(str1 === ''){
-               i++;
-           }
-           while(str2 === ''){
-               j++;
-           }
-                if(str1[i] === 'A'){
-                    if(str1[i+1] === 'n' && str1[i+2] === ''){
-                        str1 = str1.slice(i+3);
-                    }else if(str1[i+1] === 'n'){
-                   str1 = str1;
-                    }
-                    else{
-                        str1 = str1.slice(i+2);
-                    }
-                }else {
-                    if(str1[i+1] === 'h' && str1[i+2] === 'e'){
-                        str1 = str1.slice(i+4);
-                    }
-                }
-                
-                if(str2[j] === 'A'){
-                    console.log('hey');
-                    console.log(str2[j+2])
-                    if(str2[j+1] === 'n' && str1[j+2] === ''){
-                        str2 = str2.slice(j+3);
-                    }else if(str2[j+1] === 'n'){
-                        str2 = str2;
-                    }
-                    else{    
-                        str2 = str2.slice(j+2);
-                    }
-                }else {
-                    if(str2[j+1] === 'h' && str2[j+2] === 'e'){
-                        str2 = str2.slice(j+4);
-                    }
-                }
-                
-                
-                
-                if(str1 > str2){
-                    console.log('1');
-                    return 1;
-                }else{
-                    console.log('-1');
-                    return -1;
-                }
-                
-            }    
-        
-        bands.sort(compareFunc);
- 
-        const ele = document.createElement('ul');
-        let t = '';
-        for(let i=0;i<bands.length;i++){
-            t  += `<li>${bands[i]}</li>`;
-        }
-        console.log(t);
-        ele.innerHTML = t;
+        const ref = Array.from(document.querySelectorAll('[data-time'));
+        // ref.forEach( item => {
+        //     let ar = (item.dataset.time).split('.');
+        //     console.log(` ar[0] = ${ar[0]} and ar[1] = ${ar[1]} and ${typeof(ar[0])} and ${typeof(ar[1])}`);
+        // });
+       let seconds =  ref.map(item => {
+            let arr = item.dataset.time.split('.');
+            return parseInt(arr[0])*60 + parseInt(arr[1]); 
+        });
+        console.log(seconds);
+        seconds.forEach((sec,index) => {
+          let hours = parseInt(sec/3600);
+          sec = sec - (hours*3600);
+          let min = parseInt(sec/60);
+          sec = sec - (min*60);
+          let Sec = sec;
+           ref[index].querySelector('span').innerHTML = `<p>${hours}:${min}:${sec}</p>`;
+        });
 
         
-        document.body.appendChild(ele);
     </script>
 </body>
 </html>
